@@ -1,5 +1,8 @@
 package mg.RESTAPI.controller;
 
+
+
+import jakarta.validation.Valid;
 import mg.RESTAPI.dtos.PostDto;
 import mg.RESTAPI.dtos.PostResponse;
 import mg.RESTAPI.service.PostService;
@@ -24,7 +27,7 @@ public class PostController {
     //create blog post
 
     @PostMapping
-    public ResponseEntity<PostDto>  createPost(@RequestBody PostDto postDto){
+    public ResponseEntity<PostDto>  createPost(@Valid@RequestBody PostDto postDto){
         return new ResponseEntity<>(postService.createPost(postDto), HttpStatus.CREATED);
     }
 
@@ -53,7 +56,7 @@ public class PostController {
 
     //update post by id
     @PutMapping("/{id}")
-    public ResponseEntity<PostDto> updatePost(@RequestBody PostDto postDto, @PathVariable(name = "id") long id){
+    public ResponseEntity<PostDto> updatePost(@Valid @RequestBody PostDto postDto, @PathVariable(name = "id") long id){
 
         PostDto postResponse = postService.updatePost(postDto, id);
         return new ResponseEntity(postResponse, HttpStatus.OK);
