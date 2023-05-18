@@ -71,14 +71,14 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public PostDto getPostById(long id) {
+    public PostDto getPostById(Long id) {
 
         Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post", "id", id));
         return mapToDTO(post);
     }
 
     @Override
-    public PostDto updatePost(PostDto postDto, long id) {
+    public PostDto updatePost(PostDto postDto, Long id) {
         //get post by ide from database
 
         Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post", "id", id));
@@ -91,7 +91,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void deletePost(long id) {
+    public void deletePost(Long id) {
         Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post", "id", id));
         postRepository.delete(post);
     }

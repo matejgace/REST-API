@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public CommentDto createComment(long postId, CommentDto commentDto){
+    public CommentDto createComment(Long postId, CommentDto commentDto){
 
         //convert Dto entity
         Comment comment = mapToEntity(commentDto);
@@ -54,7 +54,7 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentDto> getCommentsByPostId(long postId) {
+    public List<CommentDto> getCommentsByPostId(Long postId) {
 
         //retrieve comment by postId
         List<Comment> comments = commentRepository.findByPostId(postId);
