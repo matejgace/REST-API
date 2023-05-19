@@ -1,8 +1,9 @@
 package mg.RESTAPI.exception;
 
+
 import org.springframework.http.HttpStatus;
 
-public class BlogAPIException extends RuntimeException{
+public class BlogAPIException extends RuntimeException {
 
     private HttpStatus status;
     private String message;

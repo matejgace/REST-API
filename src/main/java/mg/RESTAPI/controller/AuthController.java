@@ -1,5 +1,7 @@
 package mg.RESTAPI.controller;
 
+
+import mg.RESTAPI.dtos.JWTAuthResponse;
 import mg.RESTAPI.dtos.LoginDto;
 import mg.RESTAPI.dtos.RegisterDto;
 import mg.RESTAPI.service.AuthService;
@@ -10,11 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth")
 public class AuthController {
-
 
     private AuthService authService;
 
@@ -22,22 +22,21 @@ public class AuthController {
         this.authService = authService;
     }
 
-    // Build login REST API
-    @PostMapping({"/login", "/signin"})
-    public ResponseEntity<String>  login(@RequestBody LoginDto loginDto){
+    // Build Login REST API
+    @PostMapping(value = {"/login", "/signin"})
+    public ResponseEntity<JWTAuthResponse> login(@RequestBody LoginDto loginDto){
+        String token = authService.login(loginDto);
 
-       String response = authService.login(loginDto);
+        JWTAuthResponse jwtAuthResponse = new JWTAuthResponse();
+        jwtAuthResponse.setAccessToken(token);
 
-       return ResponseEntity.ok(response);
+        return ResponseEntity.ok(jwtAuthResponse);
     }
 
-    //Build Register REST API
-
-    @PostMapping({"/register", "/signup"})
-    public ResponseEntity<String>  register(@RequestBody RegisterDto registerDto){
-
+    // Build Register REST API
+    @PostMapping(value = {"/register", "/signup"})
+    public ResponseEntity<String> register(@RequestBody RegisterDto registerDto){
         String response = authService.register(registerDto);
-
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
