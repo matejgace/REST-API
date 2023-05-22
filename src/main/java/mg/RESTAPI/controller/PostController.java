@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -68,6 +69,15 @@ public class PostController {
         return new ResponseEntity<>("Post entity deleted successfully.", HttpStatus.OK);
     }
 
+    // Build Get Posts by Category REST API
+    // http://localhost:8080/api/posts/category/3
+    @GetMapping("/api/v1/posts/category/{id}")
+    public ResponseEntity<List<PostDto>> getPostsByCategory(@PathVariable("id") Long categoryId){
+        List<PostDto> postDtos = postService.getPostsByCategory(categoryId);
+        return ResponseEntity.ok(postDtos);
+    }
+}
+
 //    // Build Get Posts by Category REST API
 //    // http://localhost:8080/api/posts/category/3
 //    @GetMapping("/api/v1/posts/category/{id}")
@@ -75,4 +85,3 @@ public class PostController {
 //        List<PostDto> postDtos = postService.getPostsByCategory(categoryId);
 //        return ResponseEntity.ok(postDtos);
 //    }
-}

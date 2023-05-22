@@ -2,8 +2,10 @@ package mg.RESTAPI.service.impl;
 
 import mg.RESTAPI.dtos.PostDto;
 import mg.RESTAPI.dtos.PostResponse;
+import mg.RESTAPI.entity.Category;
 import mg.RESTAPI.entity.Post;
 import mg.RESTAPI.exception.ResourceNotFoundException;
+import mg.RESTAPI.repositories.CategoryRepository;
 import mg.RESTAPI.repositories.PostRepository;
 import mg.RESTAPI.service.PostService;
 import org.modelmapper.ModelMapper;
@@ -23,10 +25,13 @@ public class PostServiceImpl implements PostService {
 
     private PostRepository postRepository;
 
+    private CategoryRepository categoryRepository;
 
-    public PostServiceImpl(ModelMapper mapper, PostRepository postRepository) {
-        this.mapper = mapper;
+    public PostServiceImpl(PostRepository postRepository, ModelMapper mapper,
+                           CategoryRepository categoryRepository) {
         this.postRepository = postRepository;
+        this.mapper = mapper;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -94,6 +99,18 @@ public class PostServiceImpl implements PostService {
     public void deletePostById(Long id) {
         Post post = postRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("Post", "id", id));
         postRepository.delete(post);
+    }
+
+    @Override
+    public List<PostDto> getPostsByCategory(Long categoryId) {
+
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
+
+        List<Post> posts = postRepository.findByCategoryId(categoryId);
+
+        return posts.stream().map((post) -> mapToDTO(post))
+                .collect(Collectors.toList());
     }
 
     //convert Entity to DTO

@@ -3,6 +3,8 @@ package mg.RESTAPI.service;
 import mg.RESTAPI.dtos.PostDto;
 import mg.RESTAPI.dtos.PostResponse;
 
+import java.util.List;
+
 
 public interface PostService {
 
@@ -15,5 +17,7 @@ public interface PostService {
     PostDto updatePost(PostDto postDto, Long id);
 
     void deletePostById(Long id);
+
+    List<PostDto> getPostsByCategory(Long categoryId);
 
 }
