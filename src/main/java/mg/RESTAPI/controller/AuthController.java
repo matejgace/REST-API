@@ -1,6 +1,7 @@
 package mg.RESTAPI.controller;
 
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import mg.RESTAPI.dtos.JWTAuthResponse;
 import mg.RESTAPI.dtos.LoginDto;
 import mg.RESTAPI.dtos.RegisterDto;
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1/auth")
+@RequestMapping("/api/auth")
+@Tag(
+        name = "CRUD REST API's for Auth Resource"
+)
 public class AuthController {
 
     private AuthService authService;
@@ -40,5 +44,3 @@ public class AuthController {
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 }
-
-

@@ -1,5 +1,6 @@
 package mg.RESTAPI.controller;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import mg.RESTAPI.dtos.CategoryDto;
 
 import mg.RESTAPI.service.CategoryService;
@@ -12,6 +13,9 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/categories")
+@Tag(
+        name = "CRUD REST API's for Category Resource"
+)
 public class CategoryController {
 
     private CategoryService categoryService;
@@ -33,7 +37,7 @@ public class CategoryController {
     // build Get Category REST API
     @GetMapping("{id}")
     public  ResponseEntity<CategoryDto> getCategory(@PathVariable("id") Long categoryId){
-        CategoryDto categoryDto = categoryService.getcategory(categoryId);
+        CategoryDto categoryDto = categoryService.getCategory(categoryId);
         return ResponseEntity.ok(categoryDto);
     }
     // Build Get All Categories REST API
